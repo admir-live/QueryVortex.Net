@@ -1,11 +1,36 @@
-﻿namespace QueryVortex.Terminal 
+﻿using QueryVortex.Core;
+
+namespace QueryVortex.Terminal;
+
+internal abstract class Program
 {
-    internal abstract class Program
+    private static void Main(string[] args)
     {
-        static void Main(string[] args)
+        var queryString =
+            "select=price,category&filter=((price[gte]=10ANDprice[lte]=100)OR(category[eq]=electronicsANDstock[gt]=0))ANDavailability[eq]=in_stock&order=price[desc],category[asc]";
+
+
+        var parser = new QueryStringParser(queryString);
+
+        var queryObject = parser.GetQueryObject();
+
+        foreach (var f in queryObject.Filters)
         {
-            var queryString =
-                "select=price,category&filter=((price[gte]=10ANDprice[lte]=100)OR(category[eq]=electronicsANDstock[gt]=0))ANDavailability[eq]=in_stock&order=price[desc],category[asc]";
+            Console.WriteLine(f.Field);
+            Console.WriteLine(f.Operator);
+            Console.WriteLine(f.Value);
+            Console.WriteLine(f.LogicalOperator);
+        }
+
+        foreach (var s in queryObject.SelectFields)
+        {
+            Console.WriteLine(s);
+        }
+
+        foreach (var o in queryObject.Orders)
+        {
+            Console.WriteLine(o.Field);
+            Console.WriteLine(o.OrderType);
         }
     }
 }

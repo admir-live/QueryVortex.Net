@@ -27,7 +27,9 @@ public static class OperatorParser
     private static void ValidateValues(object[] values)
     {
         if (values == null || values.Length == 0)
+        {
             throw new ArgumentException("Values array cannot be null or empty.", nameof(values));
+        }
     }
 
     private static ICondition CreateOperator(Func<string, object[], ICondition> operatorFactory, string column,
@@ -125,7 +127,9 @@ public static class OperatorParser
     public static ICondition ParseOperator(string operatorAlias, string column, object[] values)
     {
         if (OperatorAliases.TryGetValue(operatorAlias.ToLowerInvariant(), out var operatorFactory))
+        {
             return CreateOperator(operatorFactory, column, values);
+        }
 
         throw new ArgumentException($"Invalid operator: {operatorAlias}");
     }
