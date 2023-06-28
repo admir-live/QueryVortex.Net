@@ -2,6 +2,7 @@
 
 using FluentAssertions;
 using QueryVortex.Core;
+using QueryVortex.Core.Operators;
 using Xunit;
 
 namespace QueryVortex.Tests;

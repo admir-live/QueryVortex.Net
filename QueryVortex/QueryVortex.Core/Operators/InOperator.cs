@@ -1,6 +1,6 @@
 ﻿using SqlKata;
 
-namespace QueryVortex.Core;
+namespace QueryVortex.Core.Operators;
 
 public class InOperator : ICondition
 {

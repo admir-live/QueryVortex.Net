@@ -1,6 +1,6 @@
 ﻿using SqlKata;
 
-namespace QueryVortex.Core;
+namespace QueryVortex.Core.Operators;
 
 /// <summary>
 ///     Represents an operator that checks if the value of a column ends with a specified value.

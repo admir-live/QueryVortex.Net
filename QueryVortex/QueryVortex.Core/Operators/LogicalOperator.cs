@@ -1,4 +1,4 @@
-﻿namespace QueryVortex.Core;
+﻿namespace QueryVortex.Core.Operators;
 
 public enum LogicalOperator
 {

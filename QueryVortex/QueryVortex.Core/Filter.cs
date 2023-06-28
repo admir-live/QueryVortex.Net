@@ -1,4 +1,6 @@
-﻿namespace QueryVortex.Core;
+﻿using QueryVortex.Core.Operators;
+
+namespace QueryVortex.Core;
 
 public class Filter
 {

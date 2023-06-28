@@ -1,6 +1,7 @@
 ﻿using System.Collections.Specialized;
 using System.Web;
 using QueryVortex.Core.Extensions;
+using QueryVortex.Core.Operators;
 
 namespace QueryVortex.Core;
 

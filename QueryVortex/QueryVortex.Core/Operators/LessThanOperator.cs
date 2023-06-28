@@ -1,18 +1,18 @@
 ﻿using SqlKata;
 
-namespace QueryVortex.Core;
+namespace QueryVortex.Core.Operators;
 
-public class EqualOperator : ICondition
+public class LessThanOperator : ICondition
 {
     private readonly string _column;
     private readonly object _value;
-    public EqualOperator(string column, object value)
+    public LessThanOperator(string column, object value)
     {
         _column = column;
         _value = value;
     }
     public void Apply(Query query)
     {
-        query.Where(_column, "=", _value);
+        query.Where(_column, "<", _value);
     }
 }
