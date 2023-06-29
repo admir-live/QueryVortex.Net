@@ -1,12 +1,11 @@
 ﻿// Copyright (c) Penzle LLC. All Rights Reserved. Licensed under the MIT license. See License.txt in the project root for license information.
 
+using FluentAssertions;
 using QueryVortex.Core.Operators;
 using SqlKata;
+using Xunit;
 
 namespace QueryVortex.Tests;
-
-using FluentAssertions;
-using Xunit;
 
 public class EndsWithOperatorTests
 {

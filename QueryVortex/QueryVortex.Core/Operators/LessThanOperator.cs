@@ -13,6 +13,11 @@ public class LessThanOperator : ICondition
     }
     public void Apply(Query query)
     {
+        if (_column is null)
+        {
+            throw new ArgumentNullException(nameof(_column));
+        }
+
         query.Where(_column, "<", _value);
     }
 }
