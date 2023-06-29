@@ -6,15 +6,15 @@ using Xunit;
 
 namespace QueryVortex.Tests;
 
-public class LessThanOperatorTests
+public class NotLikeOperatorTests
 {
     private readonly Compiler _compiler;
     private readonly Query _query;
 
-    public LessThanOperatorTests()
+    public NotLikeOperatorTests()
     {
-        _query = new Query("test"); // assuming "test" as a default table name
-        _compiler = new SqlServerCompiler(); // assuming SQL Server as the database
+        _query = new Query("test");
+        _compiler = new SqlServerCompiler();
     }
 
     [Fact]
@@ -23,43 +23,43 @@ public class LessThanOperatorTests
         // Arrange
         var column = "test_column";
         var value = "test_value";
-        var operatorUnderTest = new LessThanOperator(column, value);
+        var operatorUnderTest = new NotLikeOperator(column, value);
 
         // Act
         operatorUnderTest.Apply(_query);
 
         // Assert
         var sql = _compiler.Compile(_query).ToString();
-        sql.Should().Contain($"[{column}] < '{value}'");
+        sql.Should().Contain($"[{column}] NOT LIKE '{value}'".ToLower());
     }
+
 
     [Fact]
     public void Apply_WithNullColumn_ShouldThrowArgumentNullException()
     {
         // Arrange
         var value = "test_value";
-        var operatorUnderTest = new LessThanOperator(null, value);
 
         // Act
-        var act = () => operatorUnderTest.Apply(_query);
+        var act = () => new NotLikeOperator(null, value);
 
         // Assert
-        act.Should().ThrowExactly<ArgumentNullException>().WithMessage("*_column*");
+        act.Should().ThrowExactly<ArgumentNullException>();
     }
 
     [Fact]
-    public void Apply_WithDifferentDataType_ShouldApplyConditionToQuery()
+    public void Apply_WithEmptyValue_ShouldApplyConditionToQuery()
     {
         // Arrange
         var column = "test_column";
-        var value = 123; // using integer value
-        var operatorUnderTest = new LessThanOperator(column, value);
+        var value = string.Empty; 
+        var operatorUnderTest = new NotLikeOperator(column, value);
 
         // Act
         operatorUnderTest.Apply(_query);
 
         // Assert
         var sql = _compiler.Compile(_query).ToString();
-        sql.Should().Contain($"[{column}] < {value}");
+        sql.Should().Contain($"[{column}] NOT LIKE '{value}'".ToLower());
     }
 }

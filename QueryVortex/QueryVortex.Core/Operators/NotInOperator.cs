@@ -13,6 +13,13 @@ public class NotInOperator : ICondition
     }
     public void Apply(Query query)
     {
-        query.WhereNotIn(_column, _values);
+        if (_values == null)
+        {
+            query.WhereNull(_column);
+        }
+        else
+        {
+            query.WhereNotIn(_column, _values);
+        }
     }
 }

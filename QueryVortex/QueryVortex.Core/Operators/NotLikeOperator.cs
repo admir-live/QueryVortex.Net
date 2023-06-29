@@ -8,7 +8,7 @@ public class NotLikeOperator : ICondition
     private readonly string _value;
     public NotLikeOperator(string column, string value)
     {
-        _column = column;
+        _column = column ?? throw new ArgumentNullException(nameof(column));
         _value = value;
     }
     public void Apply(Query query)
