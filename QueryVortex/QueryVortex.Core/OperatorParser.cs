@@ -2,28 +2,48 @@
 
 namespace QueryVortex.Core;
 
-public static class OperatorParser
+public class OperatorParser : IOperatorParser
 {
-    private static readonly Dictionary<string, Func<string, object[], ICondition>> OperatorAliases =
-        InitializeOperatorAliases();
+    private Dictionary<string, Func<string, object[], ICondition>> OperatorAliases { get; }
+
+    public OperatorParser()
+    {
+        OperatorAliases = InitializeOperatorAliases();
+    }
+
+    public ICondition ParseOperator(string operatorAlias, string column, object[] values)
+    {
+        if (OperatorAliases.TryGetValue(operatorAlias, out var operatorFactory))
+        {
+            return CreateOperator(operatorFactory, column, values);
+        }
+
+        throw new ArgumentException($"Invalid operator: {operatorAlias}");
+    }
 
     private static Dictionary<string, Func<string, object[], ICondition>> InitializeOperatorAliases()
     {
-        return new Dictionary<string, Func<string, object[], ICondition>>
-        {
-            { "in", CreateInOperator },
-            { "notin", CreateNotInOperator },
-            { "eq", CreateEqualOperator },
-            { "like", CreateLikeOperator },
-            { "neq", CreateNotEqualOperator },
-            { "notlike", CreateNotLikeOperator },
-            { "lt", CreateLessThanOperator },
-            { "gt", CreateGreaterThanOperator },
-            { "lte", CreateLessOrEqualThanOperator },
-            { "gte", CreateGreaterOrEqualThanOperator },
-            { "startswith", CreateStartsWithOperator },
-            { "endswith", CreateEndsWithOperator }
-        };
+        var aliases = new Dictionary<string, Func<string, object[], ICondition>>();
+
+        AddAlias(aliases, "in", (column, values) => new InOperator(column, values));
+        AddAlias(aliases, "notin", (column, values) => new NotInOperator(column, values));
+        AddAlias(aliases, "eq", (column, values) => new EqualOperator(column, values[0]));
+        AddAlias(aliases, "like", (column, values) => new LikeOperator(column, values[0].ToString()));
+        AddAlias(aliases, "neq", (column, values) => new NotEqualOperator(column, values[0]));
+        AddAlias(aliases, "notlike", (column, values) => new NotLikeOperator(column, values[0].ToString()));
+        AddAlias(aliases, "lt", (column, values) => new LessThanOperator(column, values[0]));
+        AddAlias(aliases, "gt", (column, values) => new GreaterThanOperator(column, values[0]));
+        AddAlias(aliases, "lte", (column, values) => new LessOrEqualThanOperator(column, values[0]));
+        AddAlias(aliases, "gte", (column, values) => new GreaterOrEqualThanOperator(column, values[0]));
+        AddAlias(aliases, "startswith", (column, values) => new StartsWithOperator(column, values[0].ToString()));
+        AddAlias(aliases, "endswith", (column, values) => new EndsWithOperator(column, values[0].ToString()));
+
+        return aliases;
+    }
+
+    private static void AddAlias(Dictionary<string, Func<string, object[], ICondition>> aliases, string alias, Func<string, object[], ICondition> factory)
+    {
+        aliases[alias] = factory;
     }
 
     private static void ValidateValues(object[] values)
@@ -34,8 +54,7 @@ public static class OperatorParser
         }
     }
 
-    private static ICondition CreateOperator(Func<string, object[], ICondition> operatorFactory, string column,
-        object[] values)
+    private static ICondition CreateOperator<T>(Func<string, object[], T> operatorFactory, string column, object[] values) where T : ICondition
     {
         try
         {
@@ -46,93 +65,5 @@ public static class OperatorParser
         {
             throw new ArgumentException("Failed to create operator.", ex);
         }
-    }
-
-    private static ICondition CreateStartsWithOperator(string column, object[] values)
-    {
-        return CreateOperator(
-            (columnValue, parameterValue) => new StartsWithOperator(columnValue, parameterValue[0].ToString()), column,
-            values);
-    }
-
-    private static ICondition CreateEndsWithOperator(string column, object[] values)
-    {
-        return CreateOperator(
-            (columnValue, parameterValue) => new EndsWithOperator(columnValue, parameterValue[0].ToString()), column,
-            values);
-    }
-
-    private static ICondition CreateInOperator(string column, object[] values)
-    {
-        return CreateOperator((columnValue, parameterValue) => new InOperator(columnValue, parameterValue), column,
-            values);
-    }
-
-    private static ICondition CreateNotInOperator(string column, object[] values)
-    {
-        return CreateOperator((columnValue, parameterValue) => new NotInOperator(columnValue, parameterValue), column,
-            values);
-    }
-
-    private static ICondition CreateEqualOperator(string column, object[] values)
-    {
-        return CreateOperator((columnValue, parameterValue) => new EqualOperator(columnValue, parameterValue[0]),
-            column, values);
-    }
-
-    private static ICondition CreateLikeOperator(string column, object[] values)
-    {
-        return CreateOperator(
-            (columnValue, parameterValue) => new LikeOperator(columnValue, parameterValue[0].ToString()), column,
-            values);
-    }
-
-    private static ICondition CreateNotEqualOperator(string column, object[] values)
-    {
-        return CreateOperator((columnValue, parameterValue) => new NotEqualOperator(columnValue, parameterValue[0]),
-            column, values);
-    }
-
-    private static ICondition CreateNotLikeOperator(string column, object[] values)
-    {
-        return CreateOperator(
-            (columnValue, parameterValue) => new NotLikeOperator(columnValue, parameterValue[0].ToString()), column,
-            values);
-    }
-
-    private static ICondition CreateLessThanOperator(string column, object[] values)
-    {
-        return CreateOperator((columnValue, parameterValue) => new LessThanOperator(columnValue, parameterValue[0]),
-            column, values);
-    }
-
-    private static ICondition CreateGreaterThanOperator(string column, object[] values)
-    {
-        return CreateOperator((columnValue, parameterValue) => new GreaterThanOperator(columnValue, parameterValue[0]),
-            column, values);
-    }
-
-    private static ICondition CreateLessOrEqualThanOperator(string column, object[] values)
-    {
-        return CreateOperator(
-            (columnValue, parameterValue) => new LessOrEqualThanOperator(columnValue, parameterValue[0]), column,
-            values);
-    }
-
-    private static ICondition CreateGreaterOrEqualThanOperator(string column, object[] values)
-    {
-        return CreateOperator(
-            (columnValue, parameterValue) => new GreaterOrEqualThanOperator(columnValue, parameterValue[0]), column,
-            values);
-    }
-
-    public static ICondition ParseOperator(string operatorAlias, string column, object[] values)
-    {
-        if (OperatorAliases.TryGetValue(operatorAlias.ToLowerInvariant(), out var operatorFactory))
-        {
-            return CreateOperator(operatorFactory, column, values);
-        }
-
-        throw new ArgumentException($"Invalid operator: {operatorAlias}");
     }
 }

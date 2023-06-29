@@ -1,4 +1,4 @@
-﻿namespace QueryVortex.Core;
+﻿namespace QueryVortex.Core.Models;
 
 public class QueryVortex
 {
