@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using QueryVortex.Core;
 using QueryVortex.Core.Models;
+using QueryVortex.Core.Parsers;
 using Xunit;
 
 namespace QueryVortex.Tests;

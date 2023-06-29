@@ -1,15 +1,14 @@
 ﻿using QueryVortex.Core.Operators;
 
-namespace QueryVortex.Core;
+namespace QueryVortex.Core.Parsers;
 
 public class OperatorParser : IOperatorParser
 {
-    private Dictionary<string, Func<string, object[], ICondition>> OperatorAliases { get; }
-
     public OperatorParser()
     {
         OperatorAliases = InitializeOperatorAliases();
     }
+    private Dictionary<string, Func<string, object[], ICondition>> OperatorAliases { get; }
 
     public ICondition ParseOperator(string operatorAlias, string column, object[] values)
     {
