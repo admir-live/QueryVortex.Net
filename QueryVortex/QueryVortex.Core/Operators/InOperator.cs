@@ -11,8 +11,8 @@ public class InOperator : ICondition
         _column = column;
         _values = values;
     }
-    public void Apply(Query query)
+    public Query Apply(Query query)
     {
-        query.WhereIn(_column, _values);
+        return query.WhereIn(_column, _values);
     }
 }

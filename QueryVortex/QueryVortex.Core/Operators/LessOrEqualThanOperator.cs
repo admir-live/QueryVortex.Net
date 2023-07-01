@@ -11,8 +11,8 @@ public class LessOrEqualThanOperator : ICondition
         _column = column;
         _value = value;
     }
-    public void Apply(Query query)
+    public Query Apply(Query query)
     {
-        query.Where(_column, "<=", _value);
+        return query.Where(_column, "<=", _value);
     }
 }

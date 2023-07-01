@@ -1,28 +1,17 @@
-﻿using QueryVortex.Core.Parsers;
-using SqlKata;
-using SqlKata.Compilers;
+﻿using System.Text.RegularExpressions;
 
-namespace QueryVortex.Terminal;
+var queryString =
+    @"?sort=price:desc&fields=name&fields=price&fields=description&fields=category&fields=brand&filters[category][$eq]=Electronics[$AND]filters[brand][$eq]=Samsung[$OR]filters[brand][$eq]=Apple[$AND]filters[price][$gte]=500[$AND]filters[price][$lte]=2000[$AND](filters[condition][$eq]=New[$OR]filters[condition][$eq]=Refurbished)&page=1&limit=20";
 
-internal abstract class Program
+var combinedPattern = @"page=(?<page>[^&]*)&limit=(?<limit>[^&]*)";
+
+var combinedRegex = new Regex(combinedPattern);
+var match = combinedRegex.Match(queryString);
+
+if (match.Success)
 {
-    private static void Main(string[] args)
-    {
-        var queryString =
-            "select=price,category&filter=((price[gte]=10[AND]price[lte]=100)[OR](category[eq]=electronics[AND]stock[gt]=0))[AND]availability[eq]=in_stock&order=price[desc],category[asc]";
+    var pageNumber = match.Groups["page"].Value;
+    var limitNumber = match.Groups["limit"].Value;
 
-        var parser = new DefaultQueryStringParserStrategy();
-        var operatorParser = new OperatorParser();
-        var sqlCompiler = new SqlServerCompiler();
-        var filters = parser.GetFilters(parser.ParseQueryString(queryString));
-        var query = new Query();
-        foreach (var f in filters)
-        {
-            Console.WriteLine($"{f.Operator} {f.Field} {f.Value} {f.LogicalOperator}");
-            // var condition = operatorParser.ParseOperator(f.Operator, f.Field, new[] { f.Value });
-            // condition.Apply(query);
-        }
-
-        Console.WriteLine(sqlCompiler.Compile(query).Sql);
-    }
+    Console.WriteLine($"Page Number: {pageNumber}, Limit Number: {limitNumber}");
 }

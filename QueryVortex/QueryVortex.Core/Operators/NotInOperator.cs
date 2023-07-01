@@ -11,15 +11,8 @@ public class NotInOperator : ICondition
         _column = column;
         _values = values;
     }
-    public void Apply(Query query)
+    public Query Apply(Query query)
     {
-        if (_values == null)
-        {
-            query.WhereNull(_column);
-        }
-        else
-        {
-            query.WhereNotIn(_column, _values);
-        }
+        return _values == null ? query.WhereNull(_column) : query.WhereNotIn(_column, _values);
     }
 }

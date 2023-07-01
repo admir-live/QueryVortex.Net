@@ -13,8 +13,8 @@ public class StartsWithOperator : ICondition
         _value = value;
     }
 
-    public void Apply(Query query)
+    public Query Apply(Query query)
     {
-        query.Where(_column, "LIKE", $"{_value}%");
+        return query.Where(_column, "LIKE", $"{_value}%");
     }
 }

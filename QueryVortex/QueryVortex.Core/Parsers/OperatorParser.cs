@@ -24,6 +24,7 @@ public class OperatorParser : IOperatorParser
     {
         var aliases = new Dictionary<string, Func<string, object[], ICondition>>();
 
+        AddAlias(aliases, "$OR", (column, values) => new OrOperator());
         AddAlias(aliases, "in", (column, values) => new InOperator(column, values));
         AddAlias(aliases, "notin", (column, values) => new NotInOperator(column, values));
         AddAlias(aliases, "eq", (column, values) => new EqualOperator(column, values[0]));

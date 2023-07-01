@@ -21,8 +21,8 @@ public class EndsWithOperator : ICondition
     ///     ends with the specified value.
     /// </summary>
     /// <param name="query">The query to apply the WHERE clause to.</param>
-    public void Apply(Query query)
+    public Query Apply(Query query)
     {
-        query.Where(_column, "LIKE", $"%{_value}");
+        return query.Where(_column, "LIKE", $"%{_value}");
     }
 }
