@@ -22,21 +22,42 @@ Getting Started
 ### Usage
 
 ```csharp
-    using QueryVortex.Core.Builders;
-    using QueryVortex.Core.Parsers;
-    
-    var queryString =
-        @"?sort=price:desc&fields=name&fields=price&fields=description&fields=category&fields=brand&filters[category][$eq]=Electronics[$AND]filters[brand][$eq]=Samsung[$OR]filters[brand][$eq]=Apple[$AND]filters[price][$gte]=500[$AND]filters[price][$lte]=2000[$AND](filters[condition][$eq]=New[$OR]filters[condition][$eq]=Refurbished)&page=1&limit=20";
-    
-    var parser = new DefaultSqlQueryBuilder();
-    var parserObject = new DefaultQueryVortexParser();
-    
-    var result = parserObject.Parse(queryString, "products");
-    
-    var sqlQuery = parser.CreateSqlQuery(result);
-    
-    Console.WriteLine(sqlQuery.QueryText);
-    
+using QueryVortex.Core.Builders;
+using QueryVortex.Core.Parsers;
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        var queryString =
+            @"?sort=price:desc&fields=name&fields=price&fields=description&fields=category&fields=brand&filters[category][$eq]=Electronics[$AND]filters[brand][$eq]=Samsung[$OR]filters[brand][$eq]=Apple[$AND]filters[price][$gte]=500[$AND]filters[price][$lte]=2000[$AND](filters[condition][$eq]=New[$OR]filters[condition][$eq]=Refurbished)&page=1&limit=20";
+
+        var parser = new DefaultSqlQueryBuilder();
+        var parserObject = new DefaultQueryVortexParser();
+
+        var result = parserObject.Parse(queryString, "products");
+
+        var sqlQuery = parser.CreateSqlQuery(result);
+
+        Console.WriteLine(sqlQuery.QueryText);
+    }
+}
+
+  
+```
+
+#### Output
+
+```tsql
+SELECT [name], [price], [description], [category], [brand]
+FROM [products]
+WHERE [category] = 'Electronics'
+  AND ([brand] = 'Samsung' OR [brand] = 'Apple')
+  AND [price] >= 500 AND [price] <= 2000
+  AND ([condition] = 'New' OR [condition] = 'Refurbished')
+ORDER BY [price] DESC
+OFFSET 0 ROWS FETCH NEXT 20 ROWS ONLY;
 ```
 
 Example 1: Filtering by Category and Brand with Sorting and Pagination
