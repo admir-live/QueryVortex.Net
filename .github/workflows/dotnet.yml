@@ -1,50 +1,50 @@
-name: Build and Test
+name: Build and Test  
 
-on:
-  push:
-    branches: [develop]
-  pull_request:
-    branches: [develop]
-  workflow_dispatch:
+on:  
+  push:  
+    branches: [develop]  
+  pull_request:  
+    branches: [develop]  
+  workflow_dispatch:  
 
-jobs:
-  build_and_test:
-    name: Build and Test
-    runs-on: ubuntu-latest
+jobs:  
+  build_and_test:  
+    name: Build and Test  
+    runs-on: ubuntu-latest  
 
-    strategy:
-      matrix:
-        dotnet-version: ["7.0.x"]
+    strategy:  
+      matrix:  
+        dotnet-version: ["7.0.x"]  
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+    steps:  
+    - name: Checkout code  
+      uses: actions/checkout@v2  
 
-      - name: Setup .NET SDK
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: ${{ matrix.dotnet-version }}
+    - name: Setup .NET SDK  
+      uses: actions/setup-dotnet@v1  
+      with:  
+        dotnet-version: ${{ matrix.dotnet-version }}  
 
-      - name: Restore dependencies
-        run: dotnet restore
+    - name: Restore dependencies  
+      run: dotnet restore  
 
-      - name: Build
-        run: dotnet build --configuration Release --no-restore
+    - name: Build  
+      run: dotnet build --configuration Release --no-restore  
 
-      - name: Test
-        run: dotnet test --no-restore --verbosity normal
-      
-      - name: Upload coverage report to Codecov
-        uses: codecov/codecov-action@v3
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          files: /home/runner/work/QueryVortex.Net/QueryVortex.Net/coverage.xml
-          debug: true
+    - name: Test with Coverage  
+      run: dotnet test --no-restore --verbosity normal /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverletOutput=./coverage/
 
-      - name: Cache NuGet packages
-        uses: actions/cache@v3
-        with:
-          path: ~/.nuget/packages
-          key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-nuget
+    - name: Upload coverage report to Codecov  
+      uses: codecov/codecov-action@v3  
+      with:  
+        token: ${{ secrets.CODECOV_TOKEN }}  
+        files: ./coverage/coverage.opencover.xml
+        debug: true  
+
+    - name: Cache NuGet packages  
+      uses: actions/cache@v2  
+      with:  
+        path: ~/.nuget/packages  
+        key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}  
+        restore-keys: |
+          ${{ runner.os }}-nuget  
