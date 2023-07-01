@@ -41,7 +41,7 @@ jobs:
         file: ./coverage/coverage.xml
     
     - name: List coverage directory
-      run: ls -al ./coverage
+      run: ls -R
 
     - name: Cache NuGet packages  
       uses: actions/cache@v2  
