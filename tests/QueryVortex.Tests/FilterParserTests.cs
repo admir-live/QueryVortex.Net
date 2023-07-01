@@ -26,7 +26,7 @@ public class FilterParserTests
             "?sort=price:desc&fields=name&fields=price&fields=description&fields=category&fields=brand&filters[category][$eq]=Electronics[$AND]filters[brand][$eq]=Samsung[$OR]filters[brand][$eq]=Apple[$AND]filters[price][$gte]=500[$AND]filters[price][$lte]=2000[$AND](filters[condition][$eq]=New[$OR]filters[condition][$eq]=Refurbished)&page=1&limit=20";
 
         // Act
-        IEnumerable<FilterCondition> result = _filterParser.ParseFilterClause(apiQueryString);
+        var result = _filterParser.ParseFilterClause(apiQueryString);
 
         // Assert
         result.Should().NotBeNull();
@@ -82,7 +82,7 @@ public class FilterParserTests
         var apiQueryString = "";
 
         // Act
-        IEnumerable<FilterCondition> result = _filterParser.ParseFilterClause(apiQueryString);
+        var result = _filterParser.ParseFilterClause(apiQueryString);
 
         // Assert
         result.Should().NotBeNull();
@@ -96,7 +96,7 @@ public class FilterParserTests
         var apiQueryString = "?invalidQueryString";
 
         // Act
-        IEnumerable<FilterCondition> result = _filterParser.ParseFilterClause(apiQueryString);
+        var result = _filterParser.ParseFilterClause(apiQueryString);
 
         // Assert
         result.Should().NotBeNull();
@@ -110,7 +110,7 @@ public class FilterParserTests
         var apiQueryString = "?sort=price:desc";
 
         // Act
-        IEnumerable<FilterCondition> result = _filterParser.ParseFilterClause(apiQueryString);
+        var result = _filterParser.ParseFilterClause(apiQueryString);
 
         // Assert
         result.Should().NotBeNull();
