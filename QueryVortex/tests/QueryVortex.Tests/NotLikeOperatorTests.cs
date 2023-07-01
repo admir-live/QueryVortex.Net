@@ -52,7 +52,7 @@ public class NotLikeOperatorTests
     {
         // Arrange
         var column = "test_column";
-        var value = string.Empty; 
+        var value = string.Empty;
         var operatorUnderTest = new NotLikeOperator(column, value);
 
         // Act

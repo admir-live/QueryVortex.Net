@@ -1,13 +1,13 @@
 ﻿using System.Collections.Immutable;
-using System.Collections.Specialized;
 using System.Text.RegularExpressions;
 using System.Web;
 using QueryVortex.Core.Models;
+using QueryVortex.Core.Operators;
 using static System.Int32;
 
 namespace QueryVortex.Core.Parsers;
 
-public class DefaultQueryVortexParser : ISqlQueryParser
+public class DefaultQueryVortexParser : IQueryVortexParser
 {
     private const string FilterClauseRegexPattern = @"filters\[(\w+)\]\[\$([a-z]+)\]=(\w+|\$AND|\$OR)";
     private static Regex FilterClauseRegex { get; } = new(FilterClauseRegexPattern);
@@ -42,9 +42,9 @@ public class DefaultQueryVortexParser : ISqlQueryParser
 
                 var filterLogicalOperator = logicalOperator switch
                 {
-                    "$AND" => FilterLogicalOperator.And,
-                    "$OR" => FilterLogicalOperator.Or,
-                    _ => FilterLogicalOperator.And
+                    "$AND" => LogicalOperator.And,
+                    "$OR" => LogicalOperator.Or,
+                    _ => LogicalOperator.And
                 };
 
                 filterConditions.Add(new FilterCondition(field, @operator, value, filterLogicalOperator));
@@ -91,17 +91,6 @@ public class DefaultQueryVortexParser : ISqlQueryParser
 
         return orderSpecifications;
     }
-    private static string TryGetSortValue(string[] value, int index)
-    {
-        try
-        {
-            return value[index];
-        }
-        catch (Exception)
-        {
-            return null;
-        }
-    }
 
     public PaginationSettings ParsePaginationClause(string sqlQuery)
     {
@@ -115,14 +104,25 @@ public class DefaultQueryVortexParser : ISqlQueryParser
 
         return new PaginationSettings(pageNumber, limitNumber);
     }
-    public QueryParameters Parse(string sqlQuery)
+    public QueryVortexObject Parse(string sqlQuery)
     {
-        return new QueryParameters
+        return new QueryVortexObject
         {
             Pagination = ParsePaginationClause(sqlQuery),
             SelectedFields = ParseSelectClause(sqlQuery).ToList(),
             SortingOrders = ParseOrderByClause(sqlQuery).ToList(),
             FilterConditions = ParseFilterClause(sqlQuery).ToList()
         };
+    }
+    private static string TryGetSortValue(string[] value, int index)
+    {
+        try
+        {
+            return value[index];
+        }
+        catch (Exception)
+        {
+            return null;
+        }
     }
 }

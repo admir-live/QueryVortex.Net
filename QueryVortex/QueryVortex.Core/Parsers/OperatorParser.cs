@@ -2,14 +2,31 @@
 
 namespace QueryVortex.Core.Parsers;
 
-public class OperatorParser : IOperatorParser
+/// <summary>
+///     Represents a parser for operator aliases to create corresponding conditions.
+/// </summary>
+public sealed class OperatorParser : IOperatorParser
 {
+    /// <summary>
+    ///     Initializes a new instance of the OperatorParser class.
+    /// </summary>
     public OperatorParser()
     {
         OperatorAliases = InitializeOperatorAliases();
     }
+
+    /// <summary>
+    ///     Gets the dictionary of operator aliases mapped to operator factory methods.
+    /// </summary>
     private Dictionary<string, Func<string, object[], ICondition>> OperatorAliases { get; }
 
+    /// <summary>
+    ///     Parses the specified operator alias and creates an ICondition object.
+    /// </summary>
+    /// <param name="operatorAlias">The operator alias to parse.</param>
+    /// <param name="column">The column name for the condition.</param>
+    /// <param name="values">The array of values for the condition.</param>
+    /// <returns>An ICondition object representing the parsed operator.</returns>
     public ICondition ParseOperator(string operatorAlias, string column, object[] values)
     {
         if (OperatorAliases.TryGetValue(operatorAlias, out var operatorFactory))
@@ -20,6 +37,10 @@ public class OperatorParser : IOperatorParser
         throw new ArgumentException($"Invalid operator: {operatorAlias}");
     }
 
+    /// <summary>
+    ///     Initializes the dictionary of operator aliases and their corresponding factory methods.
+    /// </summary>
+    /// <returns>The initialized dictionary of operator aliases.</returns>
     private static Dictionary<string, Func<string, object[], ICondition>> InitializeOperatorAliases()
     {
         var aliases = new Dictionary<string, Func<string, object[], ICondition>>();
@@ -41,11 +62,21 @@ public class OperatorParser : IOperatorParser
         return aliases;
     }
 
+    /// <summary>
+    ///     Adds an operator alias and its corresponding factory method to the aliases dictionary.
+    /// </summary>
+    /// <param name="aliases">The dictionary of operator aliases.</param>
+    /// <param name="alias">The operator alias to add.</param>
+    /// <param name="factory">The factory method to create the operator.</param>
     private static void AddAlias(Dictionary<string, Func<string, object[], ICondition>> aliases, string alias, Func<string, object[], ICondition> factory)
     {
         aliases[alias] = factory;
     }
 
+    /// <summary>
+    ///     Validates the values array to ensure it is not null or empty.
+    /// </summary>
+    /// <param name="values">The array of values to validate.</param>
     private static void ValidateValues(object[] values)
     {
         if (values == null || values.Length == 0)
@@ -54,6 +85,14 @@ public class OperatorParser : IOperatorParser
         }
     }
 
+    /// <summary>
+    ///     Creates an operator instance of type T using the provided factory method, column, and values.
+    /// </summary>
+    /// <typeparam name="T">The type of the operator.</typeparam>
+    /// <param name="operatorFactory">The factory method to create the operator.</param>
+    /// <param name="column">The column name for the operator.</param>
+    /// <param name="values">The array of values for the operator.</param>
+    /// <returns>An instance of type T representing the created operator.</returns>
     private static ICondition CreateOperator<T>(Func<string, object[], T> operatorFactory, string column, object[] values) where T : ICondition
     {
         try

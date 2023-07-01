@@ -8,11 +8,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\QueryVortex.Core\QueryVortex.Core.csproj" />
+    <ProjectReference Include="..\QueryVortex.Core\QueryVortex.Core.csproj"/>
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="SqlKata.Execution" Version="2.4.0" />
+    <PackageReference Include="SqlKata.Execution" Version="2.4.0"/>
   </ItemGroup>
 
 </Project>

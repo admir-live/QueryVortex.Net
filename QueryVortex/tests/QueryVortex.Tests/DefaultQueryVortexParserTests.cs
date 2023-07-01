@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using QueryVortex.Core;
 using QueryVortex.Core.Models;
+using QueryVortex.Core.Operators;
 using QueryVortex.Core.Parsers;
 using Xunit;
 
@@ -8,7 +9,7 @@ namespace QueryVortex.Tests;
 
 public class DefaultQueryVortexParserTests
 {
-    private readonly ISqlQueryParser _parser;
+    private readonly IQueryVortexParser _parser;
 
     public DefaultQueryVortexParserTests()
     {
@@ -82,7 +83,7 @@ public class DefaultQueryVortexParserTests
         var result = _parser.Parse(sqlQuery);
 
         // Assert
-        var expected = new QueryParameters
+        var expected = new QueryVortexObject
         {
             Pagination = new PaginationSettings(2, 10),
             SelectedFields = new List<string> { "field1", "field2" },
@@ -159,7 +160,7 @@ public class DefaultQueryVortexParserTests
         filterCondition.FieldName.Should().Be("category");
         filterCondition.ComparisonValue.Should().Be("books");
         filterCondition.ComparisonOperator.Should().Be("eq");
-        filterCondition.LogicalOperator.Should().Be(FilterLogicalOperator.And);
+        filterCondition.LogicalOperator.Should().Be(LogicalOperator.And);
     }
 
     [Fact]
@@ -177,13 +178,13 @@ public class DefaultQueryVortexParserTests
         filterCondition1.FieldName.Should().Be("category");
         filterCondition1.ComparisonValue.Should().Be("books");
         filterCondition1.ComparisonOperator.Should().Be("eq");
-        filterCondition1.LogicalOperator.Should().Be(FilterLogicalOperator.And);
+        filterCondition1.LogicalOperator.Should().Be(LogicalOperator.And);
 
         var filterCondition2 = result.ElementAt(1);
         filterCondition2.FieldName.Should().Be("price");
         filterCondition2.ComparisonValue.Should().Be("50");
         filterCondition2.ComparisonOperator.Should().Be("lt");
-        filterCondition2.LogicalOperator.Should().Be(FilterLogicalOperator.And);
+        filterCondition2.LogicalOperator.Should().Be(LogicalOperator.And);
     }
 
     [Fact]
@@ -312,7 +313,7 @@ public class DefaultQueryVortexParserTests
         filterCondition.FieldName.Should().Be("category");
         filterCondition.ComparisonValue.Should().Be("books");
         filterCondition.ComparisonOperator.Should().Be("eq");
-        filterCondition.LogicalOperator.Should().Be(FilterLogicalOperator.And);
+        filterCondition.LogicalOperator.Should().Be(LogicalOperator.And);
     }
 
     [Fact]
@@ -359,17 +360,17 @@ public class DefaultQueryVortexParserTests
         result.FilterConditions[0].FieldName.Should().Be("category");
         result.FilterConditions[0].ComparisonValue.Should().Be("books");
         result.FilterConditions[0].ComparisonOperator.Should().Be("eq");
-        result.FilterConditions[0].LogicalOperator.Should().Be(FilterLogicalOperator.And);
+        result.FilterConditions[0].LogicalOperator.Should().Be(LogicalOperator.And);
 
         result.FilterConditions[1].FieldName.Should().Be("price");
         result.FilterConditions[1].ComparisonValue.Should().Be("50");
         result.FilterConditions[1].ComparisonOperator.Should().Be("lt");
-        result.FilterConditions[1].LogicalOperator.Should().Be(FilterLogicalOperator.And);
+        result.FilterConditions[1].LogicalOperator.Should().Be(LogicalOperator.And);
 
         result.FilterConditions[2].FieldName.Should().Be("rating");
         result.FilterConditions[2].ComparisonValue.Should().Be("4");
         result.FilterConditions[2].ComparisonOperator.Should().Be("gt");
-        result.FilterConditions[2].LogicalOperator.Should().Be(FilterLogicalOperator.And);
+        result.FilterConditions[2].LogicalOperator.Should().Be(LogicalOperator.And);
     }
 
     [Fact]
@@ -413,7 +414,7 @@ public class DefaultQueryVortexParserTests
         filterCondition.FieldName.Should().Be("category");
         filterCondition.ComparisonValue.Should().Be("books");
         filterCondition.ComparisonOperator.Should().Be("eq");
-        filterCondition.LogicalOperator.Should().Be(FilterLogicalOperator.And);
+        filterCondition.LogicalOperator.Should().Be(LogicalOperator.And);
     }
 
     [Fact]
