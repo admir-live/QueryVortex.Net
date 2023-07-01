@@ -33,6 +33,11 @@ jobs:
 
       - name: Test
         run: dotnet test --no-restore --verbosity normal
+      
+      - name: Upload coverage report to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
 
       - name: Cache NuGet packages
         uses: actions/cache@v3
@@ -41,8 +46,3 @@ jobs:
           key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
           restore-keys: |
             ${{ runner.os }}-nuget
-            
-      - name: Upload coverage reports to Codecov
-        uses: actions/checkout@3
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
