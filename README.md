@@ -3,6 +3,8 @@ QueryVortex.Net
 
 QueryVortex.Net is a robust .NET library designed to transform complex API queries into actionable backend logic. This powerful tool converts URL parameters, including intricate filters, sorting instructions, and field selectors, into executable commands.
 
+[![codecov](https://codecov.io/gh/admir-live/QueryVortex.Net/branch/develop/graph/badge.svg?token=XXZ9G84BMK)](https://codecov.io/gh/admir-live/QueryVortex.Net)
+
 Features
 --------
 
