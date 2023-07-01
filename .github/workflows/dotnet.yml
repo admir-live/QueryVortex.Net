@@ -39,6 +39,9 @@ jobs:
       with:  
         token: ${{ secrets.CODECOV_TOKEN }}  
         file: ./coverage/coverage.xml
+    
+    - name: List coverage directory
+      run: ls -al ./coverage
 
     - name: Cache NuGet packages  
       uses: actions/cache@v2  
