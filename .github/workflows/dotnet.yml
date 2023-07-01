@@ -32,13 +32,13 @@ jobs:
       run: dotnet build --configuration Release --no-restore  
 
     - name: Test with Coverage  
-      run: dotnet test --no-restore --verbosity normal /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverletOutput=/home/runner/work/QueryVortex.Net/QueryVortex.Net/coverage/coverage.xml
+      run: dotnet test --no-restore --verbosity normal /p:CollectCoverage=true /p:CoverletOutputFormat=opencover -r "./coverage" /p:CoverletOutput=./coverage/coverage.xml
 
     - name: Upload coverage report to Codecov  
       uses: codecov/codecov-action@v3  
       with:  
         token: ${{ secrets.CODECOV_TOKEN }}  
-        file: /home/runner/work/QueryVortex.Net/QueryVortex.Net/coverage/coverage.xml
+        file: ./coverage/coverage.xml
 
     - name: Cache NuGet packages  
       uses: actions/cache@v2  
