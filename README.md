@@ -10,7 +10,7 @@ Features
 *   Handles diverse filter operators ('greater than', 'less than', 'equals to') and logical expressions (AND/OR)
 *   Supports sorting data in ascending or descending order
 *   Facilitates the selection of specific fields from the API responses
-*   Unit test coverage of 99%
+*   Unit test coverage > 95%
 
 Getting Started
 ---------------
