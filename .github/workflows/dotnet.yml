@@ -39,6 +39,7 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           file: ./coverage.xml
+          debug: true
 
       - name: Cache NuGet packages
         uses: actions/cache@v3
