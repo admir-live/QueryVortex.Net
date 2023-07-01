@@ -27,14 +27,14 @@ jobs:
     needs: setup-dotnet
     steps:
     - name: Build
-      run: dotnet build --configuration Release
+      run: dotnet build --configuration Release QueryVortex.Core/QueryVortex.Core.csproj
 
   run-tests:
     runs-on: ubuntu-latest
     needs: build
     steps:
     - name: Run Tests
-      run: dotnet test --no-build --verbosity normal --configuration Release --collect:"XPlat Code Coverage"
+      run: dotnet test --no-build --verbosity normal --configuration Release --collect:"XPlat Code Coverage" QueryVortex.Tests/QueryVortex.Tests.csproj
       id: test
       continue-on-error: true
 
