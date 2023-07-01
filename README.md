@@ -43,8 +43,6 @@ class Program
         Console.WriteLine(sqlQuery.QueryText);
     }
 }
-
-  
 ```
 
 #### Output
