@@ -22,19 +22,11 @@ jobs:
       with:
         dotnet-version: 7.0.x
 
-  restore-dependencies:
-    runs-on: ubuntu-latest
-    needs: setup-dotnet
-    steps:
-    - name: Restore dependencies
-      run: dotnet restore
-
   build:
     runs-on: ubuntu-latest
-    needs: restore-dependencies
     steps:
     - name: Build
-      run: dotnet build --no-restore --configuration Release
+      run: dotnet build --configuration Release
 
   run-tests:
     runs-on: ubuntu-latest
