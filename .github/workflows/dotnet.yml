@@ -31,17 +31,22 @@ jobs:
     - name: Build  
       run: dotnet build --configuration Release --no-restore  
 
-    - name: Test with Coverage  
-      run: dotnet test --collect:"XPlat Code Coverage"
+    - name: Test
+      run: dotnet test --no-build --verbosity normal
 
-    - name: Upload coverage report to Codecov  
-      uses: codecov/codecov-action@v3  
-      with:  
-        token: ${{ secrets.CODECOV_TOKEN }}  
-        file: ./coverage/coverage.xml
-    
-    - name: List coverage directory
-      run: ls -R
+    - name: Install ReportGenerator tool
+      run: dotnet tool install --global dotnet-reportgenerator-globaltool
+
+    - name: Create Coverage Report
+      run: |
+        dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
+        reportgenerator "-reports:**/coverage.opencover.xml" "-targetdir:coverage" -reporttypes:"Cobertura"
+        
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v1
+      with:
+        file: ./coverage/Cobertura.xml
+        fail_ci_if_error: true
 
     - name: Cache NuGet packages  
       uses: actions/cache@v2  
