@@ -183,7 +183,7 @@ public class DefaultQueryVortexParserTests
 
         var filterCondition2 = result.ElementAt(1);
         filterCondition2.FieldName.Should().Be("price");
-        filterCondition2.ComparisonValue.Should().Be("50");
+        filterCondition2.ComparisonValue.Should().Be(50);
         filterCondition2.ComparisonOperator.Should().Be(ComparisonOperator.LessThan);
         filterCondition2.LogicalOperator.Should().Be(LogicalOperator.And);
     }
@@ -364,12 +364,12 @@ public class DefaultQueryVortexParserTests
         result.FilterConditions[0].LogicalOperator.Should().Be(LogicalOperator.And);
 
         result.FilterConditions[1].FieldName.Should().Be("price");
-        result.FilterConditions[1].ComparisonValue.Should().Be("50");
+        result.FilterConditions[1].ComparisonValue.Should().Be(50);
         result.FilterConditions[1].ComparisonOperator.Should().Be(ComparisonOperator.LessThan);
         result.FilterConditions[1].LogicalOperator.Should().Be(LogicalOperator.And);
 
         result.FilterConditions[2].FieldName.Should().Be("rating");
-        result.FilterConditions[2].ComparisonValue.Should().Be("4");
+        result.FilterConditions[2].ComparisonValue.Should().Be(4);
         result.FilterConditions[2].ComparisonOperator.Should().Be(ComparisonOperator.GreaterThan);
         result.FilterConditions[2].LogicalOperator.Should().Be(LogicalOperator.And);
     }

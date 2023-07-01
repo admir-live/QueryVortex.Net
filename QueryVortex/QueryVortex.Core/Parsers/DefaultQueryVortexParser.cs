@@ -48,7 +48,10 @@ public class DefaultQueryVortexParser : IQueryVortexParser
                     _ => LogicalOperator.And
                 };
 
-                filterConditions.Add(new FilterCondition(field, @operator.ToComparisonOperator(), value, filterLogicalOperator));
+                var parsedValue = value.TryParseToNumericObject();
+                filterConditions.Add(parsedValue.Success
+                    ? new FilterCondition(field, @operator.ToComparisonOperator(), parsedValue.Value, filterLogicalOperator)
+                    : new FilterCondition(field, @operator.ToComparisonOperator(), value, filterLogicalOperator));
             }
         }
         catch (Exception e)
@@ -71,7 +74,6 @@ public class DefaultQueryVortexParser : IQueryVortexParser
             foreach (var sortValue in sortValues)
             {
                 var value = sortValue.Split(':');
-                object index;
                 var sortFieldName = TryGetSortValue(value, 0);
                 var sortOrder = TryGetSortValue(value, 1);
                 var sortOrderType = sortOrder switch

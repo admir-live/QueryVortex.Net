@@ -15,6 +15,6 @@ public class OrOperator : ICondition
     /// <param name="query">The query to apply the WHERE clause to.</param>
     public Query Apply(Query query)
     {
-        return query.Where(query1 => query.From(query1));
+        return query.Where(q => query.From(q));
     }
 }

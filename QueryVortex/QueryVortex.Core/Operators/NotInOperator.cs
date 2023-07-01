@@ -24,6 +24,6 @@ public class NotInOperator : ICondition
     /// <param name="query">The query to apply the WHERE clause to.</param>
     public Query Apply(Query query)
     {
-        return _values == null ? query.WhereNull(_column) : query.WhereNotIn(_column, _values);
+        return _values == null ? query.WhereNull(_column) : query.WhereNotIn(_column, _values.Select(o => o));
     }
 }

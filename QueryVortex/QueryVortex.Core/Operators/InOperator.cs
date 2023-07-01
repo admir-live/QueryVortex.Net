@@ -23,6 +23,6 @@ public class InOperator : ICondition
     /// <param name="query">The query to apply the WHERE clause to.</param>
     public Query Apply(Query query)
     {
-        return query.WhereIn(_column, _values);
+        return query.WhereIn(_column, _values.Select(o => o).ToArray());
     }
 }

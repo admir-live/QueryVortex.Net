@@ -53,13 +53,13 @@ public class FilterParserTests
         var condition4 = result.ElementAt(3);
         condition4.FieldName.Should().Be("price");
         condition4.ComparisonOperator.Should().Be(ComparisonOperator.GreaterThanOrEqual);
-        condition4.ComparisonValue.Should().Be("500");
+        condition4.ComparisonValue.Should().Be(500);
         condition4.LogicalOperator.Should().Be(LogicalOperator.And);
 
         var condition5 = result.ElementAt(4);
         condition5.FieldName.Should().Be("price");
         condition5.ComparisonOperator.Should().Be(ComparisonOperator.LessThanOrEqual);
-        condition5.ComparisonValue.Should().Be("2000");
+        condition5.ComparisonValue.Should().Be(2000);
         condition5.LogicalOperator.Should().Be(LogicalOperator.And);
 
         var condition6 = result.ElementAt(5);
