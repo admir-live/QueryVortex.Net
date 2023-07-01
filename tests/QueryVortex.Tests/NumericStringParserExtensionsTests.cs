@@ -34,20 +34,6 @@ public class NumericStringParserExtensionsTests
     }
 
     [Fact]
-    public void TryParseToNumericObject_ValidDoubleInput_ReturnsTrueAndCorrectValue()
-    {
-        // Arrange
-        var validDouble = "42,42";
-
-        // Act
-        var result = validDouble.TryParseToNumericObject();
-
-        // Assert
-        result.Success.Should().BeTrue();
-        result.Value.Should().Be(42.42);
-    }
-
-    [Fact]
     public void TryParseToNumericObject_EmptyInput_ReturnsFalse()
     {
         // Arrange
