@@ -25,11 +25,12 @@ jobs:
     - name: Build
       run: dotnet build --no-restore --configuration Release
 
-    - name: Test
+    - name: Run Tests
       run: dotnet test --no-build --verbosity normal --configuration Release --collect:"XPlat Code Coverage"
+      id: test
 
     - name: Upload coverage reports to Codecov
       uses: codecov/codecov-action@v3
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
-        file: ./test/**/coverage.cobertura.xml
+        file: ${{ steps.test.outputs.directory }}/**/*.cobertura.xml
