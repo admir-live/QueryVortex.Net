@@ -55,7 +55,7 @@ WHERE [category] = 'Electronics'
   AND [price] >= 500 AND [price] <= 2000
   AND ([condition] = 'New' OR [condition] = 'Refurbished')
 ORDER BY [price] DESC
-OFFSET 0 ROWS FETCH NEXT 20 ROWS ONLY;
+OFFSET 0 ROWS FETCH NEXT 20 ROWS ONLY
 ```
 
 Example 1: Filtering by Category and Brand with Sorting and Pagination
