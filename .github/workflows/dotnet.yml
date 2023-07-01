@@ -34,14 +34,13 @@ jobs:
     - name: Test
       run: dotnet test ./tests/QueryVortex.Tests/QueryVortex.Tests.csproj --verbosity normal
 
-
     - name: Install ReportGenerator tool
       run: dotnet tool install --global dotnet-reportgenerator-globaltool
 
     - name: Create Coverage Report
       run: |
-        dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
-        reportgenerator "-reports:**/coverage.opencover.xml" "-targetdir:coverage" -reporttypes:"Cobertura"
+        dotnet test ./tests/QueryVortex.Tests/QueryVortex.Tests.csproj /p:CollectCoverage=true /p:CoverletOutput=./coverage/ /p:CoverletOutputFormat=opencover
+        reportgenerator "-reports:./coverage/coverage.opencover.xml" "-targetdir:coverage" -reporttypes:"Cobertura"
         
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v1
