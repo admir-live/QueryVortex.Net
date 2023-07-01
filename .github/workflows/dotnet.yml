@@ -38,7 +38,7 @@ jobs:
       uses: codecov/codecov-action@v3  
       with:  
         token: ${{ secrets.CODECOV_TOKEN }}  
-        files: ./coverage/coverage.opencover.xml
+        file: /home/runner/work/QueryVortex.Net/QueryVortex.Net/coverage.xml
         debug: true  
 
     - name: Cache NuGet packages  
