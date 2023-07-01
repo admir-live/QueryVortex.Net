@@ -41,6 +41,7 @@ public interface IQueryVortexParser
     ///     Parses an SQL query and returns the extracted query parameters.
     /// </summary>
     /// <param name="sqlQuery">The SQL query to parse.</param>
+    /// <param name="tableName">The SQL table name.</param>
     /// <returns>The extracted query parameters.</returns>
-    QueryVortexObject Parse(string sqlQuery);
+    QueryVortexObject Parse(string sqlQuery, string tableName = "YourTableName");
 }

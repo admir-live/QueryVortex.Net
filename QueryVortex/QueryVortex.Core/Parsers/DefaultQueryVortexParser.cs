@@ -1,6 +1,7 @@
 ﻿using System.Collections.Immutable;
 using System.Text.RegularExpressions;
 using System.Web;
+using QueryVortex.Core.Extensions;
 using QueryVortex.Core.Models;
 using QueryVortex.Core.Operators;
 using static System.Int32;
@@ -47,7 +48,7 @@ public class DefaultQueryVortexParser : IQueryVortexParser
                     _ => LogicalOperator.And
                 };
 
-                filterConditions.Add(new FilterCondition(field, @operator, value, filterLogicalOperator));
+                filterConditions.Add(new FilterCondition(field, @operator.ToComparisonOperator(), value, filterLogicalOperator));
             }
         }
         catch (Exception e)
@@ -104,10 +105,11 @@ public class DefaultQueryVortexParser : IQueryVortexParser
 
         return new PaginationSettings(pageNumber, limitNumber);
     }
-    public QueryVortexObject Parse(string sqlQuery)
+    public QueryVortexObject Parse(string sqlQuery, string tableName)
     {
         return new QueryVortexObject
         {
+            TableName = tableName,
             Pagination = ParsePaginationClause(sqlQuery),
             SelectedFields = ParseSelectClause(sqlQuery).ToList(),
             SortingOrders = ParseOrderByClause(sqlQuery).ToList(),
