@@ -38,7 +38,7 @@ jobs:
       uses: codecov/codecov-action@v3  
       with:  
         token: ${{ secrets.CODECOV_TOKEN }}  
-        file: /home/runner/work/QueryVortex.Net/QueryVortex.Net/coverage.xml
+        file: ./coverage/coverage.xml
         debug: true  
 
     - name: Cache NuGet packages  
@@ -47,4 +47,4 @@ jobs:
         path: ~/.nuget/packages  
         key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}  
         restore-keys: |
-          ${{ runner.os }}-nuget  
+          ${{ runner.os }}-nuget
