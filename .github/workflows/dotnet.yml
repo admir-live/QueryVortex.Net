@@ -32,7 +32,8 @@ jobs:
       run: dotnet build --configuration Release --no-restore  
 
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test ./tests/QueryVortex.Tests/QueryVortex.Tests.csproj --verbosity normal
+
 
     - name: Install ReportGenerator tool
       run: dotnet tool install --global dotnet-reportgenerator-globaltool
