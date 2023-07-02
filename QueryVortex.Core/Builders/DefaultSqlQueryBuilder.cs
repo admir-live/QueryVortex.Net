@@ -1,4 +1,6 @@
-﻿using QueryVortex.Core.Models;
+﻿using System.Collections.Generic;
+using System.Linq;
+using QueryVortex.Core.Models;
 using QueryVortex.Core.Parsers;
 using SqlKata;
 

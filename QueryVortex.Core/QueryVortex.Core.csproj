@@ -1,9 +1,16 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>disable</Nullable>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <PackageId>QueryVortex.Net</PackageId>
+    <Authors>Admir Mujkic</Authors>
+    <Company>Penzle LLC</Company>
+    <PackageProjectUrl>https://github.com/admir-live/QueryVortex.Net</PackageProjectUrl>
+    <PackageIconUrl>https://dev.azure.com/penzle/_apis/GraphProfile/MemberAvatars/e9c70b7c-622d-40be-947c-989027dbb95a</PackageIconUrl>
+    <PackageTags>API .NET QueryProcessing URLParameters FilterOperators Sorting FieldSelection LogicalExpressions BackendLogic EfficientResponseManagement UnitTesting</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Description>QueryVortex.Net is a robust .NET library designed to transform complex API queries into actionable backend logic. This powerful tool converts URL parameters, including intricate filters, sorting instructions, and field selectors, into executable commands.</Description>
   </PropertyGroup>
 
   <ItemGroup>

@@ -1,4 +1,6 @@
-﻿using QueryVortex.Core.Models;
+﻿using System;
+using System.Collections.Generic;
+using QueryVortex.Core.Models;
 
 namespace QueryVortex.Core.Extensions;
 

@@ -1,4 +1,6 @@
-﻿using System.Collections.Immutable;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
 using QueryVortex.Core.Extensions;
@@ -21,9 +23,9 @@ public class DefaultQueryVortexParser : IQueryVortexParser
             var fields = nameValueCollection["fields"];
             return fields?.Split(',').Where(s => !string.IsNullOrWhiteSpace(s)).Select(s => s.Trim()) ?? Array.Empty<string>();
         }
-        catch (Exception e)
+        catch (Exception)
         {
-            return ArraySegment<string>.Empty;
+            return Array.Empty<string>();
         }
     }
 
@@ -54,9 +56,9 @@ public class DefaultQueryVortexParser : IQueryVortexParser
                     : new FilterCondition(field, @operator.ToComparisonOperator(), value, filterLogicalOperator));
             }
         }
-        catch (Exception e)
+        catch (Exception)
         {
-            return ImmutableList<FilterCondition>.Empty;
+            return Array.Empty<FilterCondition>();
         }
 
         return filterConditions;
@@ -87,9 +89,9 @@ public class DefaultQueryVortexParser : IQueryVortexParser
                 orderSpecifications.Add(new OrderSpecification(sortFieldName, sortOrderType));
             }
         }
-        catch (Exception e)
+        catch (Exception)
         {
-            return ImmutableList<OrderSpecification>.Empty;
+            return Array.Empty<OrderSpecification>();
         }
 
         return orderSpecifications;

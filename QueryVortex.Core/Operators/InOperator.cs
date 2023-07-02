@@ -1,4 +1,6 @@
-﻿using SqlKata;
+﻿using System.Collections.Generic;
+using System.Linq;
+using SqlKata;
 
 namespace QueryVortex.Core.Operators;
 

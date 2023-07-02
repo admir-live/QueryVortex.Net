@@ -1,5 +1,7 @@
 ﻿// Copyright (c) Penzle LLC.All Rights Reserved.Licensed under the MIT license.See License.txt in the project root for license information.
 
+using System.Collections.Generic;
+
 namespace QueryVortex.Core.Models;
 
 public sealed class QueryVortexObject

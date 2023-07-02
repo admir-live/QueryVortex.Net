@@ -1,4 +1,5 @@
-﻿using SqlKata;
+﻿using System;
+using SqlKata;
 
 namespace QueryVortex.Core.Operators;
 
