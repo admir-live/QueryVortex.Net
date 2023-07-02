@@ -4,6 +4,7 @@ on:
   push:
     tags:
       - 'v*'
+  workflow_dispatch:
 
 jobs:
   deploy:
@@ -21,7 +22,7 @@ jobs:
       run: dotnet build --configuration Release QueryVortex.Core/QueryVortex.Core.csproj
 
     - name: Pack with dotnet
-      run: dotnet pack --configuration Release --output nupkg QueryVortex.Core/QueryVortex.Core.csproj
+      run: dotnet pack --configuration Release --output ./ QueryVortex.Core/QueryVortex.Core.csproj
 
     - name: Publish to NuGet
       run: dotnet nuget push "*.nupkg" --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
