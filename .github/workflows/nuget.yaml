@@ -21,8 +21,12 @@ jobs:
     - name: Build with dotnet
       run: dotnet build --configuration Release QueryVortex.Core/QueryVortex.Core.csproj
 
+    - name: Get Version
+      id: version
+      uses: battila7/get-version-action@v2
+
     - name: Pack with dotnet
-      run: dotnet pack --configuration Release --output ./ QueryVortex.Core/QueryVortex.Core.csproj
+      run: dotnet pack QueryVortex.Core/QueryVortex.Core.csproj --no-restore --no-build --configuration Release --include-symbols -p:PackageVersion=${{ steps.version.outputs.version-without-v }} --output ./
 
     - name: Publish to NuGet
-      run: dotnet nuget push "*.nupkg" --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
+      run: dotnet nuget push "*.nupkg" -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json --skip-duplicate || true
