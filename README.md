@@ -144,3 +144,8 @@ License
 QueryVortex.Net is released under the MIT License.
 
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
+
+Attention Engineers
+-------
+
+**Please note that the work on this library is currently still in progress and is not yet ready for production use. Please exercise caution and refrain from deploying or integrating it into live environments. Your understanding is appreciated.**
