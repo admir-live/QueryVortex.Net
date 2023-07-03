@@ -238,6 +238,24 @@ QueryVortex.Net is released under the MIT License.
 
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 
+Roadmap
+-------
+
+Our future plans and high-priority features are:
+
+**Extend Library to Support Dependency Injection (DI)**: Our library will be enhanced to seamlessly integrate with dependency injection frameworks. This will enable easier testing, configuration and overall manageability of the services that use QueryVortex.Net.
+
+**Extend Library to Support EF Core**: We are planning to extend the library's functionality to support Entity Framework Core. This will enable the library to leverage the performance, scalability, and flexibility of EF Core for database operations.
+
+**Improve Resilient and Error Handling**: We aim to improve the resilience of the library by implementing advanced error handling and recovery techniques. This will ensure the robustness of applications built using QueryVortex.Net.
+
+**Implement Ability to Support NoSQL**: The library will be extended to support NoSQL databases. This will provide developers with more flexibility in choosing the right database technology for their application's specific needs.
+
+**Implement More Operators**: We plan to expand the library's operator set, providing developers with more options for creating complex queries. This will enhance the flexibility and expressiveness of the API interactions facilitated by QueryVortex.Net.
+
+Please note that this roadmap may change based on user feedback and other factors. We welcome contributions and suggestions from the community!
+
+
 Attention Engineers
 -------
 
