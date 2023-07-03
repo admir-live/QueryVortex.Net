@@ -6,6 +6,7 @@
     <PackageId>QueryVortex.Net</PackageId>
     <Authors>Admir Mujkic</Authors>
     <Company>Penzle LLC</Company>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageProjectUrl>https://github.com/admir-live/QueryVortex.Net</PackageProjectUrl>
     <PackageIconUrl>https://dev.azure.com/penzle/_apis/GraphProfile/MemberAvatars/e9c70b7c-622d-40be-947c-989027dbb95a</PackageIconUrl>
     <PackageTags>API .NET QueryProcessing URLParameters FilterOperators Sorting FieldSelection LogicalExpressions BackendLogic EfficientResponseManagement UnitTesting</PackageTags>
