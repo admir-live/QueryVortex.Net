@@ -10,18 +10,91 @@ QueryVortex.Net is a robust .NET library designed to transform complex API queri
 Features
 --------
 
-*   Parses complex API request queries
-*   Handles diverse filter operators ('greater than', 'less than', 'equals to') and logical expressions (AND/OR)
-*   Supports sorting data in ascending or descending order
-*   Facilitates the selection of specific fields from the API responses
-*   Unit test coverage > 95%
+**Parsing of Complex URL Query Parameters**: Designed to convert URL parameters, including filters, sorting rules, and field selectors, into executable backend logic.
+
+**Handling Diverse Filter Operators**: Supports various operators including:
+
+| Operator     | Description                       |
+|--------------|-----------------------------------|
+| `$eq`        | Equals to                         |
+| `$ne`        | Not equals to                     |
+| `$gte`       | Greater than or equals to         |
+| `$lte`       | Less than or equals to            |
+| `$gt`        | Greater than                      |
+| `$lt`        | Less than                         |
+| `$like`      | Pattern match                     |
+| `$in`        | In operator                       |
+| `$nin`       | Not in operator                   |
+| `$nlike`     | Not like operator                 |
+| `$startswith`| Starts with operator              |
+| `$endswith`  | Ends with operator                |
+
+
+**Field Selection**: With the `fields` parameter, you can specify which fields to include in the response.
+
+**Sorting**: You can sort data in ascending or descending order using the `sort` parameter. The default sort order is ascending.
+
+**Pagination**: The `page` and `limit` parameters allow you to implement pagination in your API. You can specify the number of items per page and which page of results to retrieve.
+
+**Logical Expressions**: Supports logical nested expressions like AND/OR.
+
+**Test Coverage**: The unit test coverage is more than **95%**.
+
+Additional capabilities include parsing complex API request queries and facilitating the selection of specific fields from the API responses, handling filters with different operators and logical expressions, and streamlining API interactions for efficient response management.
+
+**Note**: The specific operators and logical expressions are used as part of the URL parameters in your API queries. For more specific details or advanced use cases, you may need to consult the official documentation or contact the maintainers of the QueryVortex.Net package directly.
+
 
 Getting Started
 ---------------
 
 ### Installation
 
-// TODO: Add installation instructions
+There are several ways you can install the `QueryVortex.Net` package:
+
+**Using .NET CLI**:
+    Run the following command in your terminal:
+    
+```
+dotnet add package QueryVortex.Net
+ ```
+
+**Using NuGet Package Manager in Visual Studio**:
+Run the following command in the Package Manager Console:
+ ```
+Install-Package QueryVortex.Net
+ ```
+
+**Using PackageReference**:
+For projects that support PackageReference, copy the following XML node into your project file to reference the package:
+ ```
+ <PackageReference Include="QueryVortex.Net" />
+ ```
+
+**Using Paket CLI**:
+Run the following command in your terminal:
+ ```
+ paket add QueryVortex.Net
+ ```
+
+**Using F# Interactive or Polyglot Notebooks**:
+    Copy this into the interactive tool or source code of the script to reference the package:
+```
+ #r "nuget: QueryVortex.Net"
+```
+
+**Using Cake**:
+    To install QueryVortex.Net as a Cake Addin or Cake Tool, use the following commands respectively:
+```
+// Install QueryVortex.Net as a Cake Addin
+#addin nuget:?package=QueryVortex.Net
+
+// Install QueryVortex.Net as a Cake Tool
+#tool nuget:?package=QueryVortex.Net
+```
+
+Please choose the method that best suits your development environment and workflow.
+
 
 ### Usage
 
@@ -62,67 +135,87 @@ ORDER BY [price] DESC
 OFFSET 0 ROWS FETCH NEXT 20 ROWS ONLY;
 ```
 
-Example 1: Filtering by Category and Brand with Sorting and Pagination
+**Example 1: Filtering by Category and Brand with Sorting and Pagination**
 
-`?filters[category][$eq]=Electronics[$AND]filters[brand][$eq]=Samsung&sort=price:asc&page=1&limit=10`
+```
+?filters[category][$eq]=Electronics[$AND]filters[brand][$eq]=Samsung&sort=price:asc&page=1&limit=10
+```
 
 This query string filters products where the category is "Electronics" and the brand is "Samsung". It sorts the results by price in ascending order and retrieves the first page with 10 items.
 
-Example 2: Filtering by Price Range and Condition with Field Selection
+**Example 2: Filtering by Price Range and Condition with Field Selection**
 
-`?filters[price][$gte]=1000&filters[price][$lte]=2000&filters[condition][$eq]=New&fields=name&fields=price&fields=description`
+```
+?filters[price][$gte]=1000&filters[price][$lte]=2000&filters[condition][$eq]=New&fields=name&fields=price&fields=description
+```
 
 This query string filters products with prices between 1000 and 2000. It also filters by products that are labeled as "New". The response will only include the name, price, and description fields.
 
-Example 3: Filtering with Multiple Brand Options using the "$OR" operator
+**Example 3: Filtering with Multiple Brand Options using the "$OR" operator**
 
-`?filters[brand][$eq]=Samsung[$OR]filters[brand][$eq]=Apple[$OR]filters[brand][$eq]=Sony`
+```
+?filters[brand][$eq]=Samsung[$OR]filters[brand][$eq]=Apple[$OR]filters[brand][$eq]=Sony
+```
 
 This query string filters products where the brand is either "Samsung", "Apple", or "Sony".
 
-Example 4: Filtering by Category and Price Range using the "$AND" operator
+**Example 4: Filtering by Category and Price Range using the "$AND" operator**
 
-`?filters[category][$eq]=Electronics[$AND]filters[price][$gte]=500[$AND]filters[price][$lte]=1000`
+```
+?filters[category][$eq]=Electronics[$AND]filters[price][$gte]=500[$AND]filters[price][$lte]=1000
+```
 
 This query string filters products in the "Electronics" category with prices between 500 and 1000.
 
-Example 5: Filtering by Name using the "Like" operator
+**Example 5: Filtering by Name using the "Like" operator**
 
-`?filters[name][$like]=iphone`
+```
+?filters[name][$like]=iphone
+```
 
 This query string filters products with names containing "iphone".
 
-Example 6: Filtering by Price using the "Less Than" operator
+**Example 6: Filtering by Price using the "Less Than" operator**
 
-`?filters[price][$lt]=500`
+```
+?filters[price][$lt]=500
+```
 
 This query string filters products with prices less than 500.
 
-Example 7: Sorting by Name in Descending Order
+**Example 7: Sorting by Name in Descending Order**
 
-`?sort=name:desc`
+```
+?sort=name:desc
+```
 
 This query string sorts the products by name in descending order.
 
-Example 8: Selecting Only the Name and Category Fields
+**Example 8: Selecting Only the Name and Category Fields**
 
-`?fields=name&fields=category`
+```
+?fields=name&fields=category
+```
 
 This query string includes only the name and category fields in the response.
 
-Example 9: Pagination - Retrieving the Second Page with 20 Items
+**Example 9: Pagination - Retrieving the Second Page with 20 Items**
 
-`?page=2&limit=20`
+```
+?page=2&limit=20
+```
 
 This query string retrieves the second page of results with 20 items per page.
 
-Example 10: Combining Filters with Different Operators
+**Example 10: Combining Filters with Different Operators**
 
-`?filters[category][$eq]=Electronics[$AND]filters[brand][$eq]=Samsung[$OR]filters[brand][$eq]=Apple[$AND]filters[price][$gte]=500[$AND]filters[price][$lte]=2000[$AND](filters[condition][$eq]=New[$OR]filters[condition][$eq]=Refurbished)`
+```
+?filters[category][$eq]=Electronics[$AND]filters[brand][$eq]=Samsung[$OR]filters[brand][$eq]=Apple[$AND]filters[price][$gte]=500[$AND]filters[price][$lte]=2000[$AND](filters[condition][$eq]=New[$OR]filters[condition][$eq]=Refurbished)
+```
 
 This query string combines multiple filters using different operators to filter products in the "Electronics" category, with the brand "Samsung" or "Apple", price between 500 and 2000, and the condition "New" or "Refurbished".
 
-Documentation
+## Documentation
 
 Please note that the documentation for QueryVortex.Net is currently a work in progress. We are actively working on providing comprehensive documentation to assist you in using the library effectively.
 
