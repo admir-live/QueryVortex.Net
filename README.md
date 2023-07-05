@@ -243,7 +243,7 @@ Roadmap
 
 Our future plans and high-priority features are:
 
-**Extend Library to Support Dependency Injection (DI)**: Our library will be enhanced to seamlessly integrate with dependency injection frameworks. This will enable easier testing, configuration and overall manageability of the services that use QueryVortex.Net.
+**[Extend Library to Support Dependency Injection (DI)](https://github.com/admir-live/QueryVortex.Net/issues/7)**: Our library will be enhanced to seamlessly integrate with dependency injection frameworks. This will enable easier testing, configuration and overall manageability of the services that use QueryVortex.Net.
 
 **Extend Library to Support EF Core**: We are planning to extend the library's functionality to support Entity Framework Core. This will enable the library to leverage the performance, scalability, and flexibility of EF Core for database operations.
 
